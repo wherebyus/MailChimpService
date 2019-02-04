@@ -6,7 +6,7 @@
   },
   "increment": "conventional:angular",
   "npm": {
-    "publish": true
+    "publish": false
   },
   "requireCleanWorkingDir": false,
   "requireUpstream": false,
