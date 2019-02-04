@@ -1,0 +1,17 @@
+{
+  "beforeChangelogCommand": "conventional-changelog -p angular -i CHANGELOG.md -s",
+  "changelogCommand": "conventional-changelog -p angular | tail -n +3",
+  "github": {
+    "release": false
+  },
+  "increment": "conventional:angular",
+  "npm": {
+    "publish": true
+  },
+  "requireCleanWorkingDir": false,
+  "requireUpstream": false,
+  "safeBump": false,
+  "src": {
+    "tagName": "v%s"
+  }
+}

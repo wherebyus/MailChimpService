@@ -1,1 +1,17 @@
 .idea
+clover.xml
+tests/report/
+.phpunit.result.cache
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+node_modules
+
+/vendor/

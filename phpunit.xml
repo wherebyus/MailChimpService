@@ -1,0 +1,28 @@
+<phpunit
+        backupGlobals="false"
+        bootstrap="bootstrap/autoload.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+            <exclude>
+                <directory suffix=".php">./app/DTOs</directory>
+                <directory suffix=".php">./app/Models</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="./tests/report" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="./clover.xml" />
+    </logging>
+    <testsuites>
+        <testsuite name="app">
+            <directory suffix=".php">./tests/app/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

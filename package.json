@@ -1,0 +1,25 @@
+{
+  "name": "mailchimpservice",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "release:minor": "release-it minor",
+    "release:patch": "release-it patch",
+    "release:pre": "release-it minor --preRelease=rc",
+    "release:rc": "release-it --preRelease=rc --npm.tag=next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wherebyus/MailChimpService.git"
+  },
+  "author": "WhereBy.Us",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wherebyus/MailChimpService/issues"
+  },
+  "homepage": "https://github.com/wherebyus/MailChimpService#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "release-it": "^10.0.7"
+  }
+}
