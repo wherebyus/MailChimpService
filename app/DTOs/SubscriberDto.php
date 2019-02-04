@@ -2,6 +2,10 @@
 
 namespace WBU\DTOs;
 
+/**
+ * Class SubscriberDto
+ * @package WBU\DTOs
+ */
 class SubscriberDto
 {
     public $mailChimpEmailAddress;
