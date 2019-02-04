@@ -1,0 +1,19 @@
+{
+  "name": "wherebyus/mailchimpservice",
+  "description": "A simple service for interacting with the MailChimp 3.0 API. Built on top of DrewM.",
+  "type": "project",
+  "authors": [
+    {
+      "name": "WhereBy.Us",
+      "email": "hello@whereby.us"
+    }
+  ],
+  "config": {
+    "platform": {
+      "php": "7.2"
+    }
+  },
+  "require": {
+    "php": "^7.2"
+  }
+}
