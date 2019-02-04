@@ -8,12 +8,21 @@
       "email": "hello@whereby.us"
     }
   ],
+  "autoload": {
+    "classmap": [],
+    "psr-4": {
+      "WBU\\": "app",
+      "WBU\\Http\\": "app/Http",
+      "WBU\\Tests\\": "tests"
+    }
+  },
   "config": {
     "platform": {
       "php": "7.2"
     }
   },
   "require": {
-    "php": "^7.2"
+    "php": "^7.2",
+    "drewm/mailchimp-api": "^2.5"
   }
 }
