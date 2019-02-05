@@ -30,14 +30,14 @@ class MailChimpService implements MailChimpServiceInterface
      * @param string $email
      * @return null|Subscriber
      */
-    public function getSubscriberByEmail(string $listId, string $email)
+    public function getSubscriberByEmail(string $listId, string $email) : ?Subscriber
     {
         $dto = $this->repository->getSubscriberByEmail($listId, $email);
 
         return empty($dto) ? null : new Subscriber($dto);
     }
 
-    public function getSubscriberByUniqueId(string $listId, string $uniqueId)
+    public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?Subscriber
     {
         $dto = $this->repository->getSubscriberByUniqueId($listId, $uniqueId);
 
@@ -74,7 +74,7 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->mailFromWordPress($email, $subject, $message);
     }
 
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields)
+    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?Subscriber
     {
         $subscriberDto = $this->repository->subscribeMember($listId, $email, $interests, $mergeFields);
 

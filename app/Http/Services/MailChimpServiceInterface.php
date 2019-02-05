@@ -15,14 +15,14 @@ interface MailChimpServiceInterface
      * @param string $email
      * @return null|Subscriber
      */
-    public function getSubscriberByEmail(string $listId, string $email);
-    public function getSubscriberByUniqueId(string $listId, string $uniqueId);
+    public function getSubscriberByEmail(string $listId, string $email) : ?Subscriber;
+    public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?Subscriber;
     public function getListSubscriberCount(string $listId) : int;
     public function getListsFromApi() : array;
     public function getRootInformationFromApi() : array;
     public function getSignupLocationsFromApi(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields);
+    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?Subscriber;
     public function updateMailChimpSettingsInWordPress(string $key) : bool;
     public function updateSubscriber(string $email, array $interests, string $listId, array $mergeFields) : bool;
     public function updateSubscriberMergeTag(string $email, string $listId, string $mergeTag, $mergeTagValue) : bool;

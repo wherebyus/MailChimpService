@@ -179,7 +179,7 @@ class MailChimpRepositoryTest extends TestCase
 
     public function testSubscribeMember_returnsArray()
     {
-        $dto = new SubscriberDto(null, $this->subscriber);
+        $dto = new SubscriberDto($this->subscriber);
         $interestArray = [];
         $mergeFields = [];
         $email = 'al@whereby.us';
@@ -197,7 +197,7 @@ class MailChimpRepositoryTest extends TestCase
 
     public function testSubscribeMemberWithMergeTag_returnsArray()
     {
-        $dto = new SubscriberDto(null, $this->subscriber);
+        $dto = new SubscriberDto($this->subscriber);
         $interestArray = [];
         $mergeFields = ['FNAME' => 'Amy'];
         $email = 'al@whereby.us';
@@ -316,7 +316,7 @@ class MailChimpRepositoryTest extends TestCase
         $results['mailChimpUniqueId'] = '20';
         $results['id'] = '223923k2k23923k';
 
-        $this->dto = new SubscriberDto(null, $results);
+        $this->dto = new SubscriberDto($results);
 
         $this->mailchimp
             ->expects($this->any())
@@ -336,7 +336,7 @@ class MailChimpRepositoryTest extends TestCase
         ];
         $listId = '1923j32j32';
         $offset = 10;
-        $dto = new SubscriberDto(null, $this->subscriber);
+        $dto = new SubscriberDto($this->subscriber);
         $this->mailchimp
             ->expects($this->once())
             ->method('get')

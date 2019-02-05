@@ -2,6 +2,8 @@
 
 namespace WBU\Http\Repositories;
 
+use WBU\DTOs\SubscriberDto;
+
 interface MailChimpRepositoryInterface
 {
     /**
@@ -27,14 +29,14 @@ interface MailChimpRepositoryInterface
     public function getListID() : string;
     public function getListsFromApi() : array;
     public function getListSubscriberCount(string $listId) : int;
-    public function getSubscriberByEmail(string $listId, string $email);
-    public function getSubscriberByUniqueId(string $listId, string $uniqueId);
+    public function getSubscriberByEmail(string $listId, string $email) : ?SubscriberDto;
+    public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?SubscriberDto;
     public function getRootInformationFromApi() : array;
     public function getSignupLocationInterestId() : string;
     public function getSignupLocationsFromApi(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function sendCampaign(string $campaignId) : bool;
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields);
+    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?SubscriberDto;
     public function updateCampaignContentById(
         string $campaignId,
         string $content

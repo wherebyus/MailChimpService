@@ -121,17 +121,17 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     }
 
     // Previously called getMemberFromApi()
-    public function getSubscriberByEmail(string $listId, string $email)
+    public function getSubscriberByEmail(string $listId, string $email) : ?SubscriberDto
     {
         $subscriber_hash = $this->getSubscriberHashFromEmail($email);
         $membersApiResponse = $this->mailChimp->get("lists/{$listId}/members/{$subscriber_hash}");
 
         $subscriber = isset($membersApiResponse['id']) ? $membersApiResponse : null;
 
-        return $subscriber ? new SubscriberDto(null, $subscriber) : null;
+        return $subscriber ? new SubscriberDto($subscriber) : null;
     }
 
-    public function getSubscriberByUniqueId(string $listId, string $uniqueId)
+    public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?SubscriberDto
     {
         $membersApiResponse = $this->mailChimp->get(
             "lists/{$listId}/members?unique_email_id={$uniqueId}&fields=members.email_address,members.unique_email_id"
@@ -139,7 +139,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
 
         $subscriber = isset($membersApiResponse['id']) ? $membersApiResponse : null;
 
-        return $subscriber ? new SubscriberDto(null, $subscriber) : null;
+        return $subscriber ? new SubscriberDto($subscriber) : null;
     }
 
     private function getSubscriberHashFromEmail(string $email) : string
@@ -276,7 +276,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#create-post_lists_list_id_members
      */
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields)
+    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?SubscriberDto
     {
         /**
          * @todo Don't forget the Interest ID
@@ -294,7 +294,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
 
         try {
             $result = $this->post("lists/{$listId}/members", $arguments);
-            $response = new SubscriberDto(null, $result);
+            $response = new SubscriberDto($result);
         } catch (\Exception $e) {
             $response = null;
         }
@@ -311,7 +311,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         $dtoArray = [];
 
         foreach ($resultSet as $object) {
-            $dtoArray[] = new SubscriberDto(null, $object);
+            $dtoArray[] = new SubscriberDto($object);
         }
 
         return $dtoArray;
