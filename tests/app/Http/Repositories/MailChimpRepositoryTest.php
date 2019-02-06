@@ -26,7 +26,7 @@ class MailChimpRepositoryTest extends TestCase
         \WP_Mock::setUsePatchwork(true);
         \WP_Mock::bootstrap();
 
-        $this->apiKey = '54d72e6d2e4a734c9bed87a2d03a1684-us7';
+        $this->apiKey = 'maidkmasodmasd92gibberish-us7';
 
         $this->mailchimp = $this->createMock('DrewM\MailChimp\MailChimp');
         $this->mailchimp->verify_ssl = false;
