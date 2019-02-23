@@ -774,4 +774,37 @@ class MailChimpRepositoryTest extends TestCase
 
         $this->assertFalse($actualResults);
     }
+
+    public function testCanGetSegmentById_returnsArray()
+    {
+        $arguments = [];
+        $expectedResult = [
+            'member_count' => 10000,
+        ];
+        $listId = '1234';
+        $segmentId = '292929';
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->with("lists/{$listId}/segments/{$segmentId}", $arguments)
+            ->willReturn($expectedResult);
+
+        $actualResults = $this->repository->getSegmentById($listId, $segmentId);
+
+        $this->assertEquals($expectedResult, $actualResults);
+    }
+
+    public function testCannotGetSegmentById_returnsEmptyArray()
+    {
+        $listId = '1234';
+        $segmentId = '232323';
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new \Exception()));
+
+        $actualResults = $this->repository->getSegmentById($listId, $segmentId);
+
+        $this->assertEmpty($actualResults);
+    }
 }

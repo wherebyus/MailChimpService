@@ -64,6 +64,11 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->getRootInformationFromApi();
     }
 
+    public function getSegmentById(string $listId, string $segmentId) : array
+    {
+        return $this->repository->getSegmentById($listId, $segmentId);
+    }
+
     public function getSignupLocationsFromApi(string $listId) : array
     {
         return $this->repository->getSignupLocationsFromApi($listId);

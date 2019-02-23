@@ -284,4 +284,23 @@ class MailChimpServiceTest extends TestCase
 
         $this->assertTrue($actualResults);
     }
+
+    public function testCanGetSegmentById_returnsArray()
+    {
+        $expectedResults = [
+            'just' => 'what you expected',
+        ];
+        $listId = '232323';
+        $segmentId = '22323232';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getSegmentById')
+            ->with($listId, $segmentId)
+            ->willReturn($expectedResults);
+
+        $actualResults = $this->service->getSegmentById($listId, $segmentId);
+
+        $this->assertEquals($expectedResults, $actualResults);
+    }
 }

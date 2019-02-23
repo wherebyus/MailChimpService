@@ -120,6 +120,20 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $this->toDtoArray($membersArray);
     }
 
+    /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments_segment_id
+     */
+    public function getSegmentById(string $listId, string $segmentId) : array
+    {
+        $arguments = [];
+
+        try {
+            return $this->get("lists/{$listId}/segments/{$segmentId}", $arguments);
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
+
     // Previously called getMemberFromApi()
     public function getSubscriberByEmail(string $listId, string $email) : ?SubscriberDto
     {
