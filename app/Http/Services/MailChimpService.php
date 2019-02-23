@@ -4,6 +4,7 @@ namespace WBU\Http\Services;
 
 use WBU\DTOs\SubscriberDto;
 use WBU\Http\Repositories\MailChimpRepository;
+use WBU\Models\Segment;
 use WBU\Models\Subscriber;
 
 class MailChimpService implements MailChimpServiceInterface
@@ -22,7 +23,7 @@ class MailChimpService implements MailChimpServiceInterface
 
     public function getListMembersFromApi(string $listId, int $offset) : array
     {
-        return $this->toModelArray($this->repository->getListMembersFromApi($listId, $offset));
+        return $this->toSubscriberModelArray($this->repository->getListMembersFromApi($listId, $offset));
     }
 
     /**
@@ -64,9 +65,20 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->getRootInformationFromApi();
     }
 
-    public function getSegmentById(string $listId, string $segmentId) : array
+    public function getSegmentById(string $listId, string $segmentId) : ?Segment
     {
-        return $this->repository->getSegmentById($listId, $segmentId);
+        $dto = $this->repository->getSegmentById($listId, $segmentId);
+
+        if (empty($dto)) {
+            return null;
+        }
+
+        return new Segment($dto);
+    }
+
+    public function getSegments(string $listId) : array
+    {
+        return $this->toSegmentModelArray($this->repository->getSegments($listId));
     }
 
     public function getSignupLocationsFromApi(string $listId) : array
@@ -90,7 +102,22 @@ class MailChimpService implements MailChimpServiceInterface
         return new Subscriber($subscriberDto);
     }
 
-    private function toModelArray(array $dtos): array
+    private function toSegmentModelArray(array $dtos): array
+    {
+        if (empty($dtos)) {
+            return [];
+        }
+
+        $modelArray = [];
+
+        foreach ($dtos as $dto) {
+            $modelArray[] = new Segment($dto);
+        }
+
+        return $modelArray;
+    }
+
+    private function toSubscriberModelArray(array $dtos): array
     {
         if (empty($dtos)) {
             return [];

@@ -3,9 +3,11 @@
 namespace WBU\Tests;
 
 use PHPUnit\Framework\TestCase;
+use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
 use WBU\Http\Repositories\MailChimpRepository;
 use WBU\Http\Services\MailChimpService;
+use WBU\Models\Segment;
 use WBU\Models\Subscriber;
 
 require __DIR__ . '/../../../../bootstrap/autoload.php';
@@ -288,8 +290,28 @@ class MailChimpServiceTest extends TestCase
     public function testCanGetSegmentById_returnsArray()
     {
         $expectedResults = [
-            'just' => 'what you expected',
+            'id' => '9d',
+            'member_count' => 9,
+            'name' => 'Wee',
         ];
+        $dto = new SegmentDto($expectedResults);
+        $listId = '232323';
+        $segmentId = '22323232';
+        $segment = new Segment($dto);
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getSegmentById')
+            ->with($listId, $segmentId)
+            ->willReturn($dto);
+
+        $actualResults = $this->service->getSegmentById($listId, $segmentId);
+
+        $this->assertEquals($segment, $actualResults);
+    }
+
+    public function testCannotGetSegmentById_returnsNull()
+    {
         $listId = '232323';
         $segmentId = '22323232';
 
@@ -297,10 +319,50 @@ class MailChimpServiceTest extends TestCase
             ->expects($this->once())
             ->method('getSegmentById')
             ->with($listId, $segmentId)
-            ->willReturn($expectedResults);
+            ->willReturn(null);
 
         $actualResults = $this->service->getSegmentById($listId, $segmentId);
 
-        $this->assertEquals($expectedResults, $actualResults);
+        $this->assertNull($actualResults);
+    }
+
+    public function testCanGetSegments_returnsArrayOfSegments()
+    {
+        $arrayOfDtos = [
+            new SegmentDto()
+        ];
+
+        $arrayOfModels = [
+            new Segment()
+        ];
+
+        $listId = '3j3j3';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getSegments')
+            ->with($listId)
+            ->willReturn($arrayOfDtos);
+
+        $actualResults = $this->service->getSegments($listId);
+
+        $this->assertEquals($arrayOfModels, $actualResults);
+    }
+
+    public function testCannotGetSegments_returnsEmptyArray()
+    {
+        $emptyArrayOfDtos = [];
+
+        $listId = '3j3j3';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('getSegments')
+            ->with($listId)
+            ->willReturn($emptyArrayOfDtos);
+
+        $actualResults = $this->service->getSegments($listId);
+
+        $this->assertEmpty($actualResults);
     }
 }
