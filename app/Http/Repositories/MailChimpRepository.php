@@ -4,6 +4,8 @@ namespace WBU\Http\Repositories;
 
 use DrewM\MailChimp\MailChimp;
 use WBU\DTOs\SubscriberDto;
+use Rollbar\Rollbar;
+use Rollbar\Payload\Level;
 
 class MailChimpRepository implements MailChimpRepositoryInterface
 {
