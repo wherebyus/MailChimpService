@@ -22,6 +22,7 @@ interface MailChimpServiceInterface
     public function getListsFromApi() : array;
     public function getRootInformationFromApi() : array;
     public function getSegmentById(string $listId, string $segmentId) : ?Segment;
+    public function getSegments(string $listId) : array;
     public function getSignupLocationsFromApi(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?Subscriber;
