@@ -3,6 +3,7 @@
 namespace WBU\Http\Repositories;
 
 use DrewM\MailChimp\MailChimp;
+use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
 
 class MailChimpRepository implements MailChimpRepositoryInterface
@@ -117,7 +118,39 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         $membersApiResponse = $this->mailChimp->get("lists/{$listId}/members?offset={$offset}");
         $membersArray = $membersApiResponse['members'] ?? [];
 
-        return $this->toDtoArray($membersArray);
+        return $this->toSubscriberDtoArray($membersArray);
+    }
+
+    /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments_segment_id
+     */
+    public function getSegmentById(string $listId, string $segmentId) : ?SegmentDto
+    {
+        $arguments = [];
+
+        try {
+            $segment = $this->get("lists/{$listId}/segments/{$segmentId}", $arguments);
+            return new SegmentDto($segment);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/segments/#read-get_lists_list_id_segments
+     */
+    public function getSegments(string $listId) :  array
+    {
+        $arguments = [];
+
+        try {
+            $apiResponse = $this->get("lists/{$listId}/segments", $arguments);
+            $segments = isset($apiResponse['segments']) ? $apiResponse['segments'] : [];
+
+            return $this->toSegmentDtoArray($segments);
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     // Previously called getMemberFromApi()
@@ -302,7 +335,22 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $response;
     }
 
-    private function toDtoArray(array $resultSet) : array
+    private function toSegmentDtoArray(array $resultSet) : array
+    {
+        if (empty($resultSet)) {
+            return [];
+        }
+
+        $dtoArray = [];
+
+        foreach ($resultSet as $object) {
+            $dtoArray[] = new SegmentDto($object);
+        }
+
+        return $dtoArray;
+    }
+
+    private function toSubscriberDtoArray(array $resultSet) : array
     {
         if (empty($resultSet)) {
             return [];

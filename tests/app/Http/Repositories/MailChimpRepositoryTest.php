@@ -5,6 +5,7 @@ namespace WBU\Tests;
 use DrewM\MailChimp\MailChimp;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
 use WBU\Http\Repositories\MailChimpRepository;
 use WP_Mock;
@@ -773,5 +774,82 @@ class MailChimpRepositoryTest extends TestCase
         );
 
         $this->assertFalse($actualResults);
+    }
+
+    public function testCanGetSegmentById_returnsSegmentDto()
+    {
+        $arguments = [];
+        $expectedResult['id'] = '9d';
+        $expectedResult['member_count'] = 9;
+        $expectedResult['name'] = 'Wee';
+        $dto = new SegmentDto($expectedResult);
+        $listId = '1234';
+        $segmentId = '292929';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->with("lists/{$listId}/segments/{$segmentId}", $arguments)
+            ->willReturn($expectedResult);
+
+        $actualResults = $this->repository->getSegmentById($listId, $segmentId);
+
+        $this->assertEquals($dto, $actualResults);
+    }
+
+    public function testCannotGetSegmentById_returnsEmptyArray()
+    {
+        $listId = '1234';
+        $segmentId = '232323';
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new \Exception()));
+
+        $actualResults = $this->repository->getSegmentById($listId, $segmentId);
+
+        $this->assertEmpty($actualResults);
+    }
+
+    public function testCanGetArrayOfSegmentDtos_returnsArray()
+    {
+        $segmentArray = [
+            'id' => '9d',
+            'member_count' => 5,
+            'name' => 'Lala',
+        ];
+        $expectedResult = [
+          'segments' => [
+              $segmentArray,
+          ],
+        ];
+        $arrayOfDtos = [
+            new SegmentDto($segmentArray)
+        ];
+
+        $listId = '22j2j2';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->with("lists/{$listId}/segments", [])
+            ->willReturn($expectedResult);
+
+        $actualResults = $this->repository->getSegments($listId);
+
+        $this->assertEquals($arrayOfDtos, $actualResults);
+    }
+
+    public function testCannotGetArrayOfSegments_returnsEmptyArray()
+    {
+        $listId = '3j3j3';
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new \Exception()));
+
+        $actualResults = $this->repository->getSegments($listId);
+
+        $this->assertEmpty($actualResults);
     }
 }
