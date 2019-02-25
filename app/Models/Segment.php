@@ -26,6 +26,11 @@ class Segment
         return get_object_vars($this);
     }
 
+    public function getMemberCount() : int
+    {
+        return $this->memberCount;
+    }
+
     public function getName() : string
     {
         return $this->name;
