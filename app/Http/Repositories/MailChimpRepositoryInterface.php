@@ -2,6 +2,7 @@
 
 namespace WBU\Http\Repositories;
 
+use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
 
 interface MailChimpRepositoryInterface
@@ -29,6 +30,8 @@ interface MailChimpRepositoryInterface
     public function getListID() : string;
     public function getListsFromApi() : array;
     public function getListSubscriberCount(string $listId) : int;
+    public function getSegmentById(string $listId, string $segmentId) : ?SegmentDto;
+    public function getSegments(string $listId) : array;
     public function getSubscriberByEmail(string $listId, string $email) : ?SubscriberDto;
     public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?SubscriberDto;
     public function getRootInformationFromApi() : array;
