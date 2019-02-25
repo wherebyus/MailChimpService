@@ -388,8 +388,12 @@ class MailChimpRepository implements MailChimpRepositoryInterface
             $this->patch("lists/{$listId}/members/{$subscriberHash}", $arguments);
             $response = true;
         } catch (\Exception $e) {
-            $errorMessage = "We're unable to update {$email}. Subscriber is out of sync.";
-            Rollbar::log(Level::WARNING, $errorMessage);
+            $errorMessage = "We're unable to update {$email} on {$listId}.";
+            $details = [
+                'exception' => $e,
+                'arguments' => $arguments
+            ];
+            Rollbar::log(Level::WARNING, $errorMessage, $details);
             $response = false;
         }
 
@@ -410,8 +414,12 @@ class MailChimpRepository implements MailChimpRepositoryInterface
             $this->patch("lists/{$listId}/members/{$subscriberHash}", $mailChimpApiArguments);
             return true;
         } catch (\Exception $e) {
+            $details = [
+                'exception' => $e,
+                'arguments' => $mailChimpApiArguments
+            ];
             $errorMessage = "We were unable to update the tag {$mergeTag} for {$email} on {$listId} to the value {$mergeTagValue}";
-            Rollbar::log(Level::WARNING, $errorMessage);
+            Rollbar::log(Level::WARNING, $errorMessage, $details);
             return false;
         }
     }
