@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
 use WBU\Http\Repositories\MailChimpRepository;
+
 use WP_Mock;
 
 require __DIR__ . '/../../../../bootstrap/autoload.php';

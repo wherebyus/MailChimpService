@@ -5,6 +5,8 @@ namespace WBU\Http\Repositories;
 use DrewM\MailChimp\MailChimp;
 use WBU\DTOs\SegmentDto;
 use WBU\DTOs\SubscriberDto;
+use Rollbar\Rollbar;
+use Rollbar\Payload\Level;
 
 class MailChimpRepository implements MailChimpRepositoryInterface
 {
@@ -434,6 +436,12 @@ class MailChimpRepository implements MailChimpRepositoryInterface
             $this->patch("lists/{$listId}/members/{$subscriberHash}", $arguments);
             $response = true;
         } catch (\Exception $e) {
+            $errorMessage = "We're unable to update {$email} on {$listId}.";
+            $details = [
+                'exception' => $e,
+                'arguments' => $arguments
+            ];
+            Rollbar::log(Level::WARNING, $errorMessage, $details);
             $response = false;
         }
 
@@ -454,7 +462,12 @@ class MailChimpRepository implements MailChimpRepositoryInterface
             $this->patch("lists/{$listId}/members/{$subscriberHash}", $mailChimpApiArguments);
             return true;
         } catch (\Exception $e) {
+            $details = [
+                'exception' => $e,
+                'arguments' => $mailChimpApiArguments
+            ];
             $errorMessage = "We were unable to update the tag {$mergeTag} for {$email} on {$listId} to the value {$mergeTagValue}";
+            Rollbar::log(Level::WARNING, $errorMessage, $details);
             return false;
         }
     }
