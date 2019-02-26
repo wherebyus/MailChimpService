@@ -778,9 +778,7 @@ class MailChimpRepositoryTest extends TestCase
 
     public function testCanGetSegmentById_returnsSegmentDto()
     {
-        $arguments = [
-            'count' => 20,
-        ];
+        $arguments = [];
         $expectedResult['id'] = '9d';
         $expectedResult['member_count'] = 9;
         $expectedResult['name'] = 'Wee';
@@ -834,7 +832,9 @@ class MailChimpRepositoryTest extends TestCase
         $this->mailchimp
             ->expects($this->once())
             ->method('get')
-            ->with("lists/{$listId}/segments", [])
+            ->with("lists/{$listId}/segments", [
+                'count' => 20,
+            ])
             ->willReturn($expectedResult);
 
         $actualResults = $this->repository->getSegments($listId);
