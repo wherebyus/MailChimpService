@@ -778,7 +778,9 @@ class MailChimpRepositoryTest extends TestCase
 
     public function testCanGetSegmentById_returnsSegmentDto()
     {
-        $arguments = [];
+        $arguments = [
+            'count' => 20,
+        ];
         $expectedResult['id'] = '9d';
         $expectedResult['member_count'] = 9;
         $expectedResult['name'] = 'Wee';
