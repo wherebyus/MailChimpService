@@ -181,7 +181,7 @@ class MailChimpRepositoryTest extends TestCase
     public function testSubscribeMember_returnsArray()
     {
         $dto = new SubscriberDto($this->subscriber);
-        $interestArray = [];
+        $tagsArray = [];
         $mergeFields = [];
         $email = 'al@whereby.us';
         $listId = '1234';
@@ -191,7 +191,7 @@ class MailChimpRepositoryTest extends TestCase
             ->method('post')
             ->willReturn($this->subscriber);
 
-        $actualResults = $this->repository->subscribeMember($listId, $email, $interestArray, $mergeFields);
+        $actualResults = $this->repository->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertEquals($dto, $actualResults);
     }
@@ -199,7 +199,7 @@ class MailChimpRepositoryTest extends TestCase
     public function testSubscribeMemberWithMergeTag_returnsArray()
     {
         $dto = new SubscriberDto($this->subscriber);
-        $interestArray = [];
+        $tagsArray = [];
         $mergeFields = ['FNAME' => 'Amy'];
         $email = 'al@whereby.us';
         $listId = '1234';
@@ -209,7 +209,7 @@ class MailChimpRepositoryTest extends TestCase
             ->method('post')
             ->willReturn($this->subscriber);
 
-        $actualResults = $this->repository->subscribeMember($listId, $email, $interestArray, $mergeFields);
+        $actualResults = $this->repository->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertEquals($dto, $actualResults);
     }
@@ -219,14 +219,14 @@ class MailChimpRepositoryTest extends TestCase
     {
         $listId = '393j3j3';
         $email = 'test@whereby.us';
-        $interests = [];
+        $tagsArray = [];
         $mergeFields = [];
         $this->mailchimp
             ->expects($this->once())
             ->method('post')
             ->will($this->throwException(new \Exception()));
 
-        $actualResults = $this->repository->subscribeMember($listId, $email, $interests, $mergeFields);
+        $actualResults = $this->repository->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertNull($actualResults);
     }
@@ -235,7 +235,7 @@ class MailChimpRepositoryTest extends TestCase
     {
         $listId = '29292j2j';
         $email = 'test@whereby.us';
-        $interests = [];
+        $tagsArray = [];
         $mergeFields = [];
 
         $this->mailchimp
@@ -243,7 +243,7 @@ class MailChimpRepositoryTest extends TestCase
             ->method('post')
             ->willReturn(false);
 
-        $actualResults = $this->repository->subscribeMember($listId, $email, $interests, $mergeFields);
+        $actualResults = $this->repository->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertNull($actualResults);
     }
@@ -251,7 +251,7 @@ class MailChimpRepositoryTest extends TestCase
     {
         $listId = '29292j2j';
         $email = 'test@whereby.us';
-        $interests = [];
+        $tagsArray = [];
         $mergeFields = [];
         $apiResults = [
             'details' => 'I am an error message',
@@ -263,7 +263,7 @@ class MailChimpRepositoryTest extends TestCase
             ->method('post')
             ->willReturn($apiResults);
 
-        $actualResults = $this->repository->subscribeMember($listId, $email, $interests, $mergeFields);
+        $actualResults = $this->repository->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertNull($actualResults);
     }

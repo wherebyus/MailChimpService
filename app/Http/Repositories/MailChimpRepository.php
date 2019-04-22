@@ -423,11 +423,11 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $result;
     }
 
-    public function updateSubscriber(string $email, array $interests, string $listId, array $mergeFields) : bool
+    public function updateSubscriber(string $email, array $tags, string $listId, array $mergeFields) : bool
     {
         $arguments = [
             'email_address' => $email,
-            'interests' => $interests,
+            'tags' => $tags,
             'merge_fields' => $mergeFields
         ];
         $subscriberHash = $this->getSubscriberHashFromEmail($email);

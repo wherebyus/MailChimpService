@@ -137,16 +137,16 @@ class MailChimpServiceTest extends TestCase
         $listId = '191929j4j4';
         $dto = new SubscriberDto();
         $email = 'test@whereby.us';
-        $interests = [];
+        $tagsArray = [];
         $mergeFields = [];
         $member = new Subscriber($dto);
 
         $this->repository->expects($this->once())
             ->method('subscribeMember')
-            ->with($listId, $email, $interests, $mergeFields)
+            ->with($listId, $email, $tagsArray, $mergeFields)
             ->willReturn($dto);
 
-        $actualResults = $this->service->subscribeMember($listId, $email, $interests, $mergeFields);
+        $actualResults = $this->service->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertEquals($member, $actualResults);
     }
@@ -155,15 +155,15 @@ class MailChimpServiceTest extends TestCase
     {
         $listId = '1ij2j22';
         $email = 'test@whereby.us';
-        $interests = [];
+        $tagsArray = [];
         $mergeFields = [];
 
         $this->repository->expects($this->once())
             ->method('subscribeMember')
-            ->with($listId, $email, $interests)
+            ->with($listId, $email, $tagsArray)
             ->willReturn(null);
 
-        $actualResults = $this->service->subscribeMember($listId, $email, $interests, $mergeFields);
+        $actualResults = $this->service->subscribeMember($listId, $email, $tagsArray, $mergeFields);
 
         $this->assertNull($actualResults);
     }
