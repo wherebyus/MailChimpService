@@ -39,7 +39,7 @@ interface MailChimpRepositoryInterface
     public function getSignupLocationsFromApi(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function sendCampaign(string $campaignId) : bool;
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?SubscriberDto;
+    public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto;
     public function updateCampaignContentById(
         string $campaignId,
         string $content

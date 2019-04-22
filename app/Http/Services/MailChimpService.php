@@ -91,9 +91,9 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->mailFromWordPress($email, $subject, $message);
     }
 
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?Subscriber
+    public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?Subscriber
     {
-        $subscriberDto = $this->repository->subscribeMember($listId, $email, $interests, $mergeFields);
+        $subscriberDto = $this->repository->subscribeMember($listId, $email, $tags, $mergeFields);
 
         if (empty($subscriberDto)) {
             return null;
