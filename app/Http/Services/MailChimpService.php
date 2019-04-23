@@ -132,6 +132,17 @@ class MailChimpService implements MailChimpServiceInterface
         return $modelArray;
     }
 
+    public function unsubscribe(Subscriber $subscriber, string $listId) : bool
+    {
+        $updatedSubscriber = $this->updateSubscriptionPreference($subscriber, $listId);
+
+        if (empty($updatedSubscriber)) {
+            return false;
+        }
+
+        return $updatedSubscriber->getSubscriptionStatus() === 'unsubscribed';
+    }
+
     public function updateMailChimpSettingsInWordPress(string $key) : bool
     {
         return $this->repository->updateMailChimpSettingsInWordPress($key);
