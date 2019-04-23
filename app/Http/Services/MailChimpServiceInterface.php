@@ -29,4 +29,5 @@ interface MailChimpServiceInterface
     public function updateMailChimpSettingsInWordPress(string $key) : bool;
     public function updateSubscriber(string $email, array $interests, string $listId, array $mergeFields) : bool;
     public function updateSubscriberMergeTag(string $email, string $listId, string $mergeTag, $mergeTagValue) : bool;
+    public function updateSubscriptionPreference(Subscriber $subscriber, string $listId) : ?Subscriber;
 }

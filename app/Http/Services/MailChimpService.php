@@ -150,4 +150,11 @@ class MailChimpService implements MailChimpServiceInterface
     {
         return $this->repository->updateSubscriberMergeTag($email, $listId, $mergeTag, $mergeTagValue);
     }
+
+    public function updateSubscriptionPreference(Subscriber $subscriber, string $listId) : ?Subscriber
+    {
+        $dto = $this->repository->updateSubscriptionPreference($subscriber->convertToDto(), $listId);
+
+        return empty($dto) ? null : new Subscriber($dto);
+    }
 }

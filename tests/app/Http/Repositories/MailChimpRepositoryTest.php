@@ -855,4 +855,68 @@ class MailChimpRepositoryTest extends TestCase
 
         $this->assertEmpty($actualResults);
     }
+
+    public function testCanUpdateSubscriptionPreference_returnsDto()
+    {
+        $email = 'test@whereby.us';
+        $status = 'cleaned';
+        $listId = '2j2j2jj2j2j';
+        $apiResults = [
+            'email_address' => $email,
+            'status' => $status,
+            'interests' => [],
+            'last_changed' => '',
+            'list_id' => '',
+            'member_rating' => 0,
+            'stats' => [
+                'avg_open_rate' => 0,
+                'avg_click_rate' => 0
+            ],
+            'merge_fields' => [],
+            'timestamp_signup' => '',
+            'unique_email_id' => null
+        ];
+        $dto = new SubscriberDto($apiResults);
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('patch')
+            ->willReturn($apiResults);
+
+        $actualResults = $this->repository->updateSubscriptionPreference($dto, $listId);
+
+        $this->assertEquals($dto, $actualResults);
+    }
+
+    public function testCannotUpdateSubscriptionPreference_returnsDto()
+    {
+        $email = 'test@whereby.us';
+        $status = 'cleaned';
+        $listId = '2j2j2jj2j2j';
+        $apiResults = [
+            'email_address' => $email,
+            'status' => $status,
+            'interests' => [],
+            'last_changed' => '',
+            'list_id' => '',
+            'member_rating' => 0,
+            'stats' => [
+                'avg_open_rate' => 0,
+                'avg_click_rate' => 0
+            ],
+            'merge_fields' => [],
+            'timestamp_signup' => '',
+            'unique_email_id' => null
+        ];
+        $dto = new SubscriberDto($apiResults);
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('patch')
+            ->will($this->throwException(new \Exception()));
+
+        $actualResults = $this->repository->updateSubscriptionPreference($dto, $listId);
+
+        $this->assertNull($actualResults);
+    }
 }
