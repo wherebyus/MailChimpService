@@ -214,33 +214,6 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $rootInformation ?: [];
     }
 
-    public function getSignupLocationInterestId() : string
-    {
-        return $this->getOption(self::OPTION_MAILCHIMP_SIGNUP_LOCATION_ID, 'af44a7a082');
-    }
-
-    /**
-     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/interest-categories/interests
-     */
-    public function getSignupLocationsFromApi(string $listId) : array
-    {
-        $arguments = [];
-        $signupLocationInterestId = $this->getSignupLocationInterestId();
-        $signupLocations = null;
-
-        try {
-            $result = $this->get(
-                "lists/{$listId}/interest-categories/{$signupLocationInterestId}/interests",
-                $arguments
-            );
-            $signupLocations = $result['interests'];
-        } catch (\Exception $e) {
-            $signupLocations = [];
-        }
-
-        return $signupLocations;
-    }
-
     public function mailFromWordPress(string $email, string $subject, string $message) : bool
     {
         $mailSuccessfullyProcessed = false;
@@ -448,11 +421,10 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $result;
     }
 
-    public function updateSubscriber(string $email, array $tags, string $listId, array $mergeFields) : bool
+    public function updateSubscriber(string $email, string $listId, array $mergeFields) : bool
     {
         $arguments = [
             'email_address' => $email,
-            'tags' => $tags,
             'merge_fields' => $mergeFields
         ];
         $subscriberHash = $this->getSubscriberHashFromEmail($email);

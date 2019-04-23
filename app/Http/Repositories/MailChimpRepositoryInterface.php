@@ -35,8 +35,6 @@ interface MailChimpRepositoryInterface
     public function getSubscriberByEmail(string $listId, string $email) : ?SubscriberDto;
     public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?SubscriberDto;
     public function getRootInformationFromApi() : array;
-    public function getSignupLocationInterestId() : string;
-    public function getSignupLocationsFromApi(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function sendCampaign(string $campaignId) : bool;
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto;
@@ -55,7 +53,7 @@ interface MailChimpRepositoryInterface
         string $replyToEmailAddress
     );
     public function updateMailChimpSettingsInWordPress(string $key) : bool;
-    public function updateSubscriber(string $email, array $interests, string $listId, array $mergeFields) : bool;
+    public function updateSubscriber(string $email, string $listId, array $mergeFields) : bool;
     public function updateSubscriberMergeTag(string $email, string $listId, string $mergeTag, $mergeTagValue) : bool;
     public function updateSubscriptionPreference(SubscriberDto $dto, string $listId) : ?SubscriberDto;
 }

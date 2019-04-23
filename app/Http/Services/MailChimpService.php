@@ -81,11 +81,6 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->toSegmentModelArray($this->repository->getSegments($listId));
     }
 
-    public function getSignupLocationsFromApi(string $listId) : array
-    {
-        return $this->repository->getSignupLocationsFromApi($listId);
-    }
-
     public function mailFromWordPress(string $email, string $subject, string $message) : bool
     {
         return $this->repository->mailFromWordPress($email, $subject, $message);
@@ -150,11 +145,10 @@ class MailChimpService implements MailChimpServiceInterface
 
     public function updateSubscriber(
         string $email,
-        array $interests,
         string $listId,
         array $mergeFields
     ) : bool {
-        return $this->repository->updateSubscriber($email, $interests, $listId, $mergeFields);
+        return $this->repository->updateSubscriber($email, $listId, $mergeFields);
     }
 
     public function updateSubscriberMergeTag(string $email, string $listId, string $mergeTag, $mergeTagValue) : bool
