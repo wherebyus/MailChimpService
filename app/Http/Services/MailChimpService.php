@@ -132,6 +132,17 @@ class MailChimpService implements MailChimpServiceInterface
         return $modelArray;
     }
 
+    public function unsubscribe(Subscriber $subscriber, string $listId) : bool
+    {
+        $updatedSubscriber = $this->updateSubscriptionPreference($subscriber, $listId);
+
+        if (empty($updatedSubscriber)) {
+            return false;
+        }
+
+        return $updatedSubscriber->getSubscriptionStatus() === 'unsubscribed';
+    }
+
     public function updateMailChimpSettingsInWordPress(string $key) : bool
     {
         return $this->repository->updateMailChimpSettingsInWordPress($key);
@@ -149,5 +160,12 @@ class MailChimpService implements MailChimpServiceInterface
     public function updateSubscriberMergeTag(string $email, string $listId, string $mergeTag, $mergeTagValue) : bool
     {
         return $this->repository->updateSubscriberMergeTag($email, $listId, $mergeTag, $mergeTagValue);
+    }
+
+    public function updateSubscriptionPreference(Subscriber $subscriber, string $listId) : ?Subscriber
+    {
+        $dto = $this->repository->updateSubscriptionPreference($subscriber->convertToDto(), $listId);
+
+        return empty($dto) ? null : new Subscriber($dto);
     }
 }

@@ -369,6 +369,29 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $dtoArray;
     }
 
+    public function updateSubscriptionPreference(SubscriberDto $dto, string $listId): ?SubscriberDto
+    {
+        $apiArguments = [
+            'email_address' => $dto->mailChimpEmailAddress,
+            'status' => $dto->mailChimpSubscriptionStatus,
+        ];
+
+        $subscriberHash = $this->getSubscriberHashFromEmail($dto->mailChimpEmailAddress);
+
+        try {
+            $updatedSubscriber = $this->patch("lists/{$listId}/members/{$subscriberHash}", $apiArguments);
+            return empty($updatedSubscriber) ? null : new SubscriberDto($updatedSubscriber);
+        } catch (\Exception $e) {
+            $errorMessage = "We're unable to update subscription status for {$dto->mailChimpEmailAddress} from {$listId}.";
+            $errorDetails = [
+                'exception' => $e,
+                'arguments' => $apiArguments
+            ];
+            Rollbar::log(Level::ERROR, $errorMessage, $errorDetails);
+            return null;
+        }
+    }
+
     /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/content/#edit-put_campaigns_campaign_id_content
      */

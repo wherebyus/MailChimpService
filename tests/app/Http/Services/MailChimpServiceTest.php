@@ -365,4 +365,61 @@ class MailChimpServiceTest extends TestCase
 
         $this->assertEmpty($actualResults);
     }
+
+    public function testCanUpdateSubscriptionPreferences_returnsSubscriber()
+    {
+        $subscriber = new Subscriber(new SubscriberDto());
+        $subscriber->setMailChimpEmailAddress('test@whereby.us');
+        $subscriber->setMailChimpSubscriptionStatus('unsubscribed');
+        $listId = '2j2j2j2j2';
+        $dto = $subscriber->convertToDto();
+
+        $this->repository
+            ->expects($this->once())
+            ->method('updateSubscriptionPreference')
+            ->with($dto, $listId)
+            ->willReturn($dto);
+
+        $actualResults = $this->service->updateSubscriptionPreference($subscriber, $listId);
+
+        $this->assertEquals($subscriber, $actualResults);
+    }
+
+    public function testCanUnsubscribeUser_returnsBoolean()
+    {
+        $subscriber = new Subscriber(new SubscriberDto());
+        $subscriber->setMailChimpEmailAddress('test@whereby.us');
+        $subscriber->setMailChimpSubscriptionStatus('unsubscribed');
+        $listId = '2j2j2j2j2';
+        $dto = $subscriber->convertToDto();
+
+        $this->repository
+            ->expects($this->once())
+            ->method('updateSubscriptionPreference')
+            ->with($dto, $listId)
+            ->willReturn($dto);
+
+        $actualResults = $this->service->unsubscribe($subscriber, $listId);
+
+        $this->assertTrue($actualResults);
+    }
+
+    public function testCannotUnsubscribeUser_returnsBoolean()
+    {
+        $subscriber = new Subscriber(new SubscriberDto());
+        $subscriber->setMailChimpEmailAddress('test@whereby.us');
+        $subscriber->setMailChimpSubscriptionStatus('unsubscribed');
+        $listId = '2j2j2j2j2';
+        $dto = $subscriber->convertToDto();
+
+        $this->repository
+            ->expects($this->once())
+            ->method('updateSubscriptionPreference')
+            ->with($dto, $listId)
+            ->willReturn(null);
+
+        $actualResults = $this->service->unsubscribe($subscriber, $listId);
+
+        $this->assertFalse($actualResults);
+    }
 }
