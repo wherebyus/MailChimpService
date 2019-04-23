@@ -1,6 +1,6 @@
 {
   "name": "mailchimpservice",
-  "version": "1.6.0-rc.2",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "release:minor": "release-it minor",
