@@ -362,106 +362,11 @@ class MailChimpRepositoryTest extends TestCase
 
         $this->assertEquals($errorMessage, $actualResults);
     }
-    public function testCanGetSignupLocationInterestId_returnsString()
-    {
-        $interestId = '292929292';
-
-        \WP_Mock::userFunction(
-            'get_option',
-            array(
-                'return' => $interestId,
-            )
-        );
-
-        $actualResults = $this->repository->getSignupLocationInterestId();
-
-        $this->assertEquals($interestId, $actualResults);
-    }
-
-    public function testCanGetSignupLocationsFromApi_returnsArray()
-    {
-        $interestsArray = [
-            'interests' => []
-        ];
-        $interestId = '19239k23k23';
-        $listId = '282828j2';
-        $apiEndpoint = "lists/{$listId}/interest-categories/{$interestId}/interests";
-
-        \WP_Mock::userFunction(
-            'get_option',
-            array(
-                'return' => $interestId,
-            )
-        );
-
-        $this->mailchimp->expects($this->once())
-            ->method('get')
-            ->with($apiEndpoint)
-            ->willReturn($interestsArray);
-
-        $actualResults = $this->repository->getSignupLocationsFromApi($listId);
-
-        $this->assertEquals($interestsArray['interests'], $actualResults);
-    }
-
-    public function testCannotGetSignupLocations_returnsEmptyArray()
-    {
-        $apiResults = [
-            'details' => 'I am an error message',
-            'status' => 400
-        ];
-        $interestId = '19239k23k23';
-        $listId = '282828j2';
-        $apiEndpoint = "lists/{$listId}/interest-categories/{$interestId}/interests";
-
-        \WP_Mock::userFunction(
-            'get_option',
-            array(
-                'return' => $interestId,
-            )
-        );
-
-        $this->mailchimp->expects($this->once())
-            ->method('get')
-            ->with($apiEndpoint)
-            ->willReturn($apiResults);
-
-        $actualResults = $this->repository->getSignupLocationsFromApi($listId);
-
-        $this->assertEmpty($actualResults);
-    }
-
-    public function testCannotGetSignupLocationsApiFails_returnsEmptyArray()
-    {
-        $apiResults = false;
-        $interestId = '19239k23k23';
-        $listId = '282828j2';
-        $apiEndpoint = "lists/{$listId}/interest-categories/{$interestId}/interests";
-
-        \WP_Mock::userFunction(
-            'get_option',
-            array(
-                'return' => $interestId,
-            )
-        );
-
-        $this->mailchimp->expects($this->once())
-            ->method('get')
-            ->with($apiEndpoint)
-            ->willReturn($apiResults);
-
-        $actualResults = $this->repository->getSignupLocationsFromApi($listId);
-
-        $this->assertEmpty($actualResults);
-    }
 
     public function testCanUpdateSubscriber_returnsTrue()
     {
         $apiResults = [];
         $email = 'test@whereby.us';
-        $interests = [
-            'test' => 'success!'
-        ];
         $mergeFields = [
             'FNAME' => 'Mickey'
         ];
@@ -474,7 +379,6 @@ class MailChimpRepositoryTest extends TestCase
 
         $actualResults = $this->repository->updateSubscriber(
             $email,
-            $interests,
             $listId,
             $mergeFields
         );
@@ -486,9 +390,6 @@ class MailChimpRepositoryTest extends TestCase
     {
         $apiResults = false;
         $email = 'test@whereby.us';
-        $interests = [
-            'test' => 'success!'
-        ];
         $mergeFields = [
             'FNAME' => 'Yeezy'
         ];
@@ -502,7 +403,6 @@ class MailChimpRepositoryTest extends TestCase
 
         $actualResults = $this->repository->updateSubscriber(
             $email,
-            $interests,
             $listId,
             $mergeFields
         );

@@ -250,18 +250,16 @@ class MailChimpServiceTest extends TestCase
     public function testCanUpdateSubscriber_returnsTrue()
     {
         $email = 'test@whereby.us';
-        $interests = [];
         $listId = '29292992j2j';
         $mergeFields = [];
         $this->repository
             ->expects($this->once())
             ->method('updateSubscriber')
-            ->with($email, $interests, $listId, $mergeFields)
+            ->with($email, $listId, $mergeFields)
             ->willReturn(true);
 
         $actualResults = $this->service->updateSubscriber(
             $email,
-            $interests,
             $listId,
             $mergeFields
         );
