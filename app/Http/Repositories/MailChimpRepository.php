@@ -286,7 +286,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#create-post_lists_list_id_members
      */
-    public function subscribeMember(string $listId, string $email, array $interests, array $mergeFields) : ?SubscriberDto
+    public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto
     {
         /**
          * @todo Don't forget the Interest ID
@@ -295,7 +295,8 @@ class MailChimpRepository implements MailChimpRepositoryInterface
          */
         $arguments = [
             'email_address' => $email,
-            'status' => 'subscribed'
+            'status' => 'subscribed',
+            'tags' => $tags,
         ];
 
         if (!empty($mergeFields)) {
