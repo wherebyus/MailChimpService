@@ -1,3 +1,13 @@
+<a name="1.7.0-alpha.0"></a>
+# [1.7.0-alpha.0](https://github.com/wherebyus/MailChimpService/compare/v1.6.0...v1.7.0-alpha.0) (2019-04-29)
+
+
+### Features
+
+* Adds method to tag a subscriber ([85f35e8](https://github.com/wherebyus/MailChimpService/commit/85f35e8))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/wherebyus/MailChimpService/compare/1.6.0-rc.2...1.6.0) (2019-04-23)
 
