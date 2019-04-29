@@ -97,6 +97,11 @@ class MailChimpService implements MailChimpServiceInterface
         return new Subscriber($subscriberDto);
     }
 
+    public function tagSubscriber(string $listId, string $email, string $tag, bool $isTagActive)
+    {
+        return $this->repository->tagSubscriber($listId, $email, $tag, $isTagActive);
+    }
+
     private function toSegmentModelArray(array $dtos): array
     {
         if (empty($dtos)) {

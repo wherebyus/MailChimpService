@@ -422,6 +422,22 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         return $result;
     }
 
+    public function tagSubscriber(string $listId, string $email, string $tag, bool $isTagActive)
+    {
+        $activeStatus = $isTagActive ? 'active' : 'inactive';
+        $arguments = [
+            $tag => $activeStatus,
+        ];
+        $subscriberHash = $this->getSubscriberHashFromEmail($email);
+
+        try {
+            $this->post("lists/{$listId}/members/{$subscriberHash}/tags", $arguments);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     public function updateSubscriber(string $email, string $listId, array $mergeFields) : bool
     {
         $arguments = [
