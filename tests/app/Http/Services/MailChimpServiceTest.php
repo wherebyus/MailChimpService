@@ -420,4 +420,39 @@ class MailChimpServiceTest extends TestCase
 
         $this->assertFalse($actualResults);
     }
+
+    public function testCanTagSubscriberByEmail_returnsBoolean()
+    {
+        $listId = '2j2j2j2j2j2';
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('tagSubscriberByEmail')
+            ->with($listId, $email, $tagName)
+            ->willReturn(true);
+
+        $actualResults = $this->service->tagSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertTrue($actualResults);
+    }
+
+    public function testCanRemoveTagrByEmail_returnsBoolean()
+    {
+        $listId = '2j2j2j2j2j2';
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('removeTagFromSubscriberByEmail')
+            ->with($listId, $email, $tagName)
+            ->willReturn(true);
+
+        $actualResults = $this->service->removeTagFromSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertTrue($actualResults);
+    }
+
 }

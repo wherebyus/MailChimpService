@@ -86,6 +86,11 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->mailFromWordPress($email, $subject, $message);
     }
 
+    public function removeTagFromSubscriberByEmail(string $listId, string $email, string $tagName) : bool
+    {
+        return $this->repository->removeTagFromSubscriberByEmail($listId, $email, $tagName);
+    }
+
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?Subscriber
     {
         $subscriberDto = $this->repository->subscribeMember($listId, $email, $tags, $mergeFields);
@@ -97,9 +102,9 @@ class MailChimpService implements MailChimpServiceInterface
         return new Subscriber($subscriberDto);
     }
 
-    public function tagSubscriber(string $listId, string $email, string $tag, bool $isTagActive)
+    public function tagSubscriberByEmail(string $listId, string $email, string $tagName) : bool
     {
-        return $this->repository->tagSubscriber($listId, $email, $tag, $isTagActive);
+        return $this->repository->tagSubscriberByEmail($listId, $email, $tagName);
     }
 
     private function toSegmentModelArray(array $dtos): array

@@ -36,9 +36,10 @@ interface MailChimpRepositoryInterface
     public function getSubscriberByUniqueId(string $listId, string $uniqueId) : ?SubscriberDto;
     public function getRootInformationFromApi() : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
+    public function removeTagFromSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
     public function sendCampaign(string $campaignId) : bool;
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto;
-    public function tagSubscriber(string $listId, string $email, string $tag, bool $isTagActive);
+    public function tagSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
     public function updateCampaignContentById(
         string $campaignId,
         string $content

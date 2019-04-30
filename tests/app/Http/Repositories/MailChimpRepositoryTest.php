@@ -819,4 +819,72 @@ class MailChimpRepositoryTest extends TestCase
 
         $this->assertNull($actualResults);
     }
+
+    public function testCanTagSubscriberByEmail_returnsTrue()
+    {
+        $apiResults = [];
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+        $listId = '123344kk2k';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('post')
+            ->willReturn($apiResults);
+
+        $actualResults = $this->repository->tagSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertTrue($actualResults);
+    }
+
+    public function testCannotTagSubscriberByEmail_returnsFalse()
+    {
+        $apiResults = false;
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+        $listId = '123344kk2k';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('post')
+            ->willReturn($apiResults);
+
+        $actualResults = $this->repository->tagSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertFalse($actualResults);
+    }
+
+    public function testCanRemoveTagFromSubscriberByEmail_returnsTrue()
+    {
+        $apiResults = [];
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+        $listId = '123344kk2k';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('post')
+            ->willReturn($apiResults);
+
+        $actualResults = $this->repository->removeTagFromSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertTrue($actualResults);
+    }
+
+    public function testCannotRemoveTagFromSubscriberByEmail_returnsFalse()
+    {
+        $apiResults = false;
+        $email = 'test@whereby.us';
+        $tagName = 'cool';
+        $listId = '123344kk2k';
+
+        $this->mailchimp
+            ->expects($this->once())
+            ->method('post')
+            ->willReturn($apiResults);
+
+        $actualResults = $this->repository->removeTagFromSubscriberByEmail($listId, $email, $tagName);
+
+        $this->assertFalse($actualResults);
+    }
 }

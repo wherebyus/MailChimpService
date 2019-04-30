@@ -271,6 +271,30 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     {
         return preg_replace('/([0-9#][\x{20E3}])|[\x{00ae}\x{00a9}\x{203C}\x{2047}\x{2048}\x{2049}\x{3030}\x{303D}\x{2139}\x{2122}\x{3297}\x{3299}][\x{FE00}-\x{FEFF}]?|[\x{2190}-\x{21FF}][\x{FE00}-\x{FEFF}]?|[\x{2300}-\x{23FF}][\x{FE00}-\x{FEFF}]?|[\x{2460}-\x{24FF}][\x{FE00}-\x{FEFF}]?|[\x{25A0}-\x{25FF}][\x{FE00}-\x{FEFF}]?|[\x{2600}-\x{27BF}][\x{FE00}-\x{FEFF}]?|[\x{2900}-\x{297F}][\x{FE00}-\x{FEFF}]?|[\x{2B00}-\x{2BF0}][\x{FE00}-\x{FEFF}]?|[\x{1F000}-\x{1F6FF}][\x{FE00}-\x{FEFF}]?/u', '', $description);
     }
+
+    /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/tags/
+     */
+    public function removeTagFromSubscriberByEmail(string $listId, string $email, string $tagName) : bool
+    {
+        $arguments = [
+            'tags' => [
+                [
+                    'name' => $tagName,
+                    'status' => 'inactive',
+                ],
+            ],
+        ];
+        $subscriberHash = $this->getSubscriberHashFromEmail($email);
+
+        try {
+            $this->post("lists/{$listId}/members/{$subscriberHash}/tags", $arguments);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#action-post_campaigns_campaign_id_actions_send
      */
@@ -311,6 +335,29 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/tags/
+     */
+    public function tagSubscriberByEmail(string $listId, string $email, string $tagName) : bool
+    {
+        $arguments = [
+            'tags' => [
+                [
+                    'name' => $tagName,
+                    'status' => 'active',
+                ],
+            ],
+        ];
+        $subscriberHash = $this->getSubscriberHashFromEmail($email);
+
+        try {
+            $this->post("lists/{$listId}/members/{$subscriberHash}/tags", $arguments);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     private function toSegmentDtoArray(array $resultSet) : array
@@ -420,22 +467,6 @@ class MailChimpRepository implements MailChimpRepositoryInterface
         }
 
         return $result;
-    }
-
-    public function tagSubscriber(string $listId, string $email, string $tag, bool $isTagActive)
-    {
-        $activeStatus = $isTagActive ? 'active' : 'inactive';
-        $arguments = [
-            $tag => $activeStatus,
-        ];
-        $subscriberHash = $this->getSubscriberHashFromEmail($email);
-
-        try {
-            $this->post("lists/{$listId}/members/{$subscriberHash}/tags", $arguments);
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
     }
 
     public function updateSubscriber(string $email, string $listId, array $mergeFields) : bool
