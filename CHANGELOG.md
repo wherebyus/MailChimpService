@@ -1,3 +1,13 @@
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/wherebyus/MailChimpService/compare/v1.7.0-alpha.0...v1.7.0) (2019-04-30)
+
+
+### Features
+
+* 🎸 Adds add and remove tag methods ([ff1fa4d](https://github.com/wherebyus/MailChimpService/commit/ff1fa4d))
+
+
+
 <a name="1.7.0-alpha.0"></a>
 # [1.7.0-alpha.0](https://github.com/wherebyus/MailChimpService/compare/v1.6.0...v1.7.0-alpha.0) (2019-04-29)
 
