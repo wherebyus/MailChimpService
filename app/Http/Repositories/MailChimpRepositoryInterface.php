@@ -38,7 +38,7 @@ interface MailChimpRepositoryInterface
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function removeTagFromSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
     public function sendCampaign(string $campaignId) : bool;
-    public function sendTestNewsletter(string $newsletterId, string $campaignId) : string;
+    public function sendTestNewsletter(string $email, string $campaignId) : string;
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto;
     public function tagSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
     public function updateCampaignContentById(

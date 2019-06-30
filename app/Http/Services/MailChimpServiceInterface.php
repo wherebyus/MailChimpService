@@ -25,7 +25,7 @@ interface MailChimpServiceInterface
     public function getSegments(string $listId) : array;
     public function mailFromWordPress(string $email, string $subject, string $message) : bool;
     public function removeTagFromSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
-    public function sendTestNewsletter(string $newsletterId, string $campaignId): string;
+    public function sendTestNewsletter(string $email, string $campaignId): string;
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?Subscriber;
     public function tagSubscriberByEmail(string $listId, string $email, string $tagName) : bool;
     public function unsubscribe(Subscriber $subscriber, string $listId) : bool;
