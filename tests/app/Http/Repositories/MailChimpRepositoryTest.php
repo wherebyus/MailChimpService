@@ -215,6 +215,15 @@ class MailChimpRepositoryTest extends TestCase
         $this->assertEquals($dto, $actualResults);
     }
 
+    public function testSendTestNewsletter_returnsBool() {
+        $expected = false;
+        $email = 'c.d.villard@gmail.com';
+        $campaignId = 'ABCDE12345';
+
+        $actualResults = $this->repository->sendTestNewsletter($email, $campaignId);
+
+        $this->assertsEquals($expected, $actualResults);
+    }
 
     public function testSubscribeMemberThrowsException_returnsNull()
     {
