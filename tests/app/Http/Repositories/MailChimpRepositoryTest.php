@@ -222,7 +222,7 @@ class MailChimpRepositoryTest extends TestCase
 
         $actualResults = $this->repository->sendTestNewsletter($email, $campaignId);
 
-        $this->assertsEquals($expected, $actualResults);
+        $this->assertEquals($expected, $actualResults);
     }
 
     public function testSubscribeMemberThrowsException_returnsNull()
