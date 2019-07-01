@@ -91,7 +91,7 @@ class MailChimpService implements MailChimpServiceInterface
         return $this->repository->removeTagFromSubscriberByEmail($listId, $email, $tagName);
     }
 
-    public function sendTestNewsletter(string $email, string $campaignId) : string
+    public function sendTestNewsletter(string $email, string $campaignId) : bool
     {
       return $this->repository->sendTestNewsletter($email, $campaignId);
     }

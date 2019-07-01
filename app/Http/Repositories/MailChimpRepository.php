@@ -310,14 +310,14 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#action-post_campaigns_campaign_id_actions_test
      */
-    public function sendTestNewsletter(string $email, string $campaignId): string {
+    public function sendTestNewsletter(string $email, string $campaignId): bool {
       $mailChimpApiArguments = [
         'test_emails' => ["{$email}"],
         'send_type' => "html"
       ];
       try {
         $this->post("campaigns/{$campaignId}/actions/test", $mailChimpApiArguments);
-        return "This worked.";
+        return true;
       } catch(\Exception $e) {
         $details = [
           'exception' => $e,
