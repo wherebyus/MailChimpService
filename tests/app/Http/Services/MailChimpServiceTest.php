@@ -421,6 +421,20 @@ class MailChimpServiceTest extends TestCase
         $this->assertFalse($actualResults);
     }
 
+    public function testCanSendTestNewsletter_returnsBoolean() {
+        $email = "c.d.villard@gmail.com";
+        $campaignId = "ABCDE12345";
+
+        $this->repository
+          ->expects($this->once())
+          ->method("sendTestNewsletter")
+          ->willReturn(true);
+
+        $actualResults = $this->service->sendTestNewsletter($email, $campaignId);
+
+        $this->assertTrue($actualResults);
+    }
+
     public function testCanTagSubscriberByEmail_returnsBoolean()
     {
         $listId = '2j2j2j2j2j2';

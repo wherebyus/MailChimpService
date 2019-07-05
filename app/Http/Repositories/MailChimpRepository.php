@@ -308,6 +308,27 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     }
 
     /**
+     * @see https://developer.mailchimp.com/documentation/mailchimp/reference/campaigns/#action-post_campaigns_campaign_id_actions_test
+     */
+    public function sendTestNewsletter(string $email, string $campaignId): bool {
+      $mailChimpApiArguments = [
+        'test_emails' => ["{$email}"],
+        'send_type' => "html"
+      ];
+      try {
+        $this->post("campaigns/{$campaignId}/actions/test", $mailChimpApiArguments);
+        return true;
+      } catch(\Exception $e) {
+        $details = [
+          'exception' => $e,
+          'arguments' => $mailChimpApiArguments
+        ];
+        Rollbar::log(Level::WARNING, $details);
+        return false;
+      }
+    }
+
+    /**
      * @see https://developer.mailchimp.com/documentation/mailchimp/reference/lists/members/#create-post_lists_list_id_members
      */
     public function subscribeMember(string $listId, string $email, array $tags, array $mergeFields) : ?SubscriberDto
