@@ -216,13 +216,31 @@ class MailChimpRepositoryTest extends TestCase
     }
 
     public function testSendTestNewsletter_returnsBool() {
-        $expected = false;
-        $email = 'c.d.villard@gmail.com';
+        $email = 'test@whereby.us';
         $campaignId = 'ABCDE12345';
+
+        $this->mailchimp
+          ->expects($this->once())
+          ->method('post')
+          ->willReturn([]);
 
         $actualResults = $this->repository->sendTestNewsletter($email, $campaignId);
 
-        $this->assertEquals($expected, $actualResults);
+        $this->assertTrue($actualResults);
+    }
+
+    public function testSendTestNewsLetterThrowsException_returnsFalse() {
+        $email = 'test@whereby.us';
+        $campaignId = 'ABCDE12345';
+
+        $this->mailchimp
+              ->expects($this->once())
+              ->method('post')
+              ->will($this->throwException(new \Exception()));
+
+        $actualResults = $this->repository->sendTestNewsletter($email, $campaignId);
+
+        $this->assertFalse($actualResults);
     }
 
     public function testSubscribeMemberThrowsException_returnsNull()
