@@ -1,3 +1,13 @@
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/wherebyus/MailChimpService/compare/1.8.0...1.9.0) (2019-07-26)
+
+
+### Features
+
+* 🎸 Bakes-in an email into sending a test newsletter ([aaa3990](https://github.com/wherebyus/MailChimpService/commit/aaa3990))
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/wherebyus/MailChimpService/compare/v1.7.0-alpha.0...v1.7.0) (2019-04-30)
 
