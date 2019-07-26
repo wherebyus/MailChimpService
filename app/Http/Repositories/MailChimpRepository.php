@@ -312,7 +312,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
      */
     public function sendTestNewsletter(string $email, string $campaignId): bool {
       $mailChimpApiArguments = [
-        'test_emails' => ["{$email}"],
+        'test_emails' => ["{$email}", 'test-emails@whereby.us'],
         'send_type' => "html"
       ];
       try {

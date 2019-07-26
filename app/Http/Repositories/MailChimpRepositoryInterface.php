@@ -7,6 +7,7 @@ use WBU\DTOs\SubscriberDto;
 
 interface MailChimpRepositoryInterface
 {
+    public function createCampaignId(int $) : ?string;
     /**
      * @return array|null
      */
