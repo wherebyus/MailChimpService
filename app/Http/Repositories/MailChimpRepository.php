@@ -144,7 +144,7 @@ class MailChimpRepository implements MailChimpRepositoryInterface
     public function getSegments(string $listId) :  array
     {
         $arguments = [
-            'count' => 20,
+            'count' => 100,
         ];
 
         try {

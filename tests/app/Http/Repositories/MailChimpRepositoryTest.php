@@ -761,7 +761,7 @@ class MailChimpRepositoryTest extends TestCase
             ->expects($this->once())
             ->method('get')
             ->with("lists/{$listId}/segments", [
-                'count' => 20,
+                'count' => 100,
             ])
             ->willReturn($expectedResult);
 
