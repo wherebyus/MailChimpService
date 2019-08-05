@@ -1,3 +1,13 @@
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/wherebyus/MailChimpService/compare/v1.9.0...v1.10.0) (2019-08-05)
+
+
+### Features
+
+* 🎸 getSegments now returns 100 ([302cf03](https://github.com/wherebyus/MailChimpService/commit/302cf03))
+
+
+
 <a name="1.9.0"></a>
 # [1.9.0](https://github.com/wherebyus/MailChimpService/compare/1.8.0...1.9.0) (2019-07-26)
 
