@@ -1,3 +1,8 @@
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/wherebyus/MailChimpService/compare/1.11.0...1.12.0) (2019-08-07)
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/wherebyus/MailChimpService/compare/v1.9.0...v1.10.0) (2019-08-05)
 
