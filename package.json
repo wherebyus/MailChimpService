@@ -20,6 +20,6 @@
   "homepage": "https://github.com/wherebyus/MailChimpService#readme",
   "dependencies": {},
   "devDependencies": {
-    "release-it": "^10.0.7"
+    "release-it": "^15.6.0"
   }
 }
